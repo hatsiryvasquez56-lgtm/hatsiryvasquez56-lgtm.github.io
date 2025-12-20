@@ -1,11 +1,11 @@
 # Yoselin Hatsiry Alvarado Vasquez
 ## Especialista en Inteligencia de Negocios y Soluciones Tecnológicas
 
-[cite_start]Estratega de datos enfocada en diseñar ecosistemas tecnológicos que transforman información compleja en decisiones rentables[cite: 4, 6]. [cite_start]Mi perfil combina la visión analítica de las **Relaciones Internacionales** con la implementación técnica de **Arquitecturas de BI**, **IA** y **Automatización**[cite: 5, 21, 65].
+Estratega de datos enfocada en diseñar ecosistemas tecnológicos que transforman información compleja en decisiones rentables. Mi perfil combina la visión analítica de las **Relaciones Internacionales** con la implementación técnica de **Arquitecturas de BI**, **IA** y **Automatización**.
 
 ---
 
-## 🛠️ Stack de Soluciones Tecnológicas
+##  Stack de Soluciones Tecnológicas
 
 | Categoría | Herramientas y Lenguajes |
 | :--- | :--- |
