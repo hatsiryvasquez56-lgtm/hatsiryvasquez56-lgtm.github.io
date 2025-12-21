@@ -1,0 +1,27 @@
+---
+---
+@import "{{ site.theme }}";
+
+body {
+  background-color: #0d1117; // Azul oscuro profundo de alta gama
+  color: #adbac7; // Texto en gris suave para lectura prolongada
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3 {
+  color: #58a6ff; // Azul brillante para destacar tu liderazgo técnico
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 10px;
+}
+
+strong {
+  color: #ffffff; // Resalta tus habilidades clave en blanco
+}
+
+a {
+  color: #2f81f7;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
