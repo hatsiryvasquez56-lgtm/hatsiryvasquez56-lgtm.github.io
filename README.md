@@ -1,7 +1,7 @@
 # Yoselin Hatsiry Alvarado Vasquez
 ## Especialista en Inteligencia de Negocios y Soluciones Tecnológicas
 
-Estratega de datos enfocada en diseñar ecosistemas tecnológicos que transforman información compleja en decisiones rentables. Mi perfil combina la visión estratégica de las **Relaciones Internacionales** con la implementación técnica de **Arquitecturas de BI**, **IA** y **Automatización de Procesos**.
+Estratega de datos con formación en **Relaciones Internacionales** y un perfil técnico especializado en el diseño de ecosistemas de BI, IA y automatización. Mi valor diferencial radica en la capacidad de integrar la visión global de negocios con arquitecturas de datos robustas para optimizar la toma de decisiones.
 
 ---
 
@@ -10,49 +10,51 @@ Estratega de datos enfocada en diseñar ecosistemas tecnológicos que transforma
 | Categoría | Herramientas y Lenguajes |
 | :--- | :--- |
 | **Data Analytics & BI** | Power BI (DAX/M), Excel Avanzado, SQL Server. |
-| **Desarrollo & Automatización** | Python (PCEP Certified), Odoo Studio, JavaScript, C++. |
-| **Ecosistemas Digitales** | ERP Dynamics, Odoo CRM, Google Analytics, Meta Ads. |
-| **Innovación** | Modelado Predictivo, Chatbots con IA, Marketing Intelligence. |
+| **Desarrollo & Automatización** | Python (PCEP), Odoo Studio, JavaScript, CSS, Java, C++. |
+| **Ecosistemas Empresariales** | Odoo CRM, ERP Dynamics, Google Analytics, Meta Ads. |
+| **Innovación & IA** | Modelado Predictivo, Chatbots con IA, Ciberseguridad (CCST). |
 
 ---
 
-## 🚀 Proyectos Estratégicos
+## 🚀 Áreas de Especialización y Casos de Éxito
 
-### 1. Business Intelligence Binacional (México - Ecuador)
-* **Solución:** Arquitectura de dashboards en Power BI con extracción automatizada desde ERP Dynamics y Odoo.
-* **Impacto:** Centralización de operaciones comerciales para directivos y fuerzas de ventas regionales, optimizando el seguimiento de KPIs y funnel de ventas.
+### 🌐 Comercio Exterior y Estrategia Internacional
+* [cite_start]**Mejora Regulatoria Aduanera:** Análisis y limpieza de datos para el Despacho Aduanero Conjunto, logrando un impacto directo en la modificación de disposiciones de la Ley Aduanera[cite: 36, 39].
+* [cite_start]**Colaboración Bilateral (CTPAT):** Participación en proyectos estratégicos con instituciones internacionales como el **CBP (EE.UU.)** para el análisis de operaciones de comercio exterior[cite: 40, 41, 42].
 
-### 2. Marketing Intelligence & Centralización de Datos
-* **Solución:** Desarrollo de un ecosistema de BI que integra métricas de **Google Analytics, Google Ads, Facebook e Instagram**.
-* **Impacto:** Transformación de datos dispersos en estrategias de marketing basadas en rendimiento real, centralizando la pauta publicitaria en una sola fuente de verdad.
+### 🚛 Optimización de Operaciones y Logística
+* [cite_start]**Minería de Datos Logística:** Identificación de patrones y tendencias mediante minería de datos para optimizar los tiempos de mercado en distintos puntos de venta[cite: 26].
+* [cite_start]**Automatización de Bases de Datos:** Gestión y automatización de reportes detallados sobre el desempeño comercial y competitividad del mercado[cite: 27, 28].
 
-### 3. Transformación Digital con Odoo & IA
-* **Solución:** Personalización de flujos de trabajo mediante **Odoo Studio** e implementación de **Chatbots con IA**.
-* **Impacto:** Automatización de la captura de leads y mejora de la eficiencia operativa mediante herramientas de inteligencia artificial y soporte técnico avanzado.
+### 📈 Inteligencia Comercial y Marketing Analytics
+* [cite_start]**Ecosistema de BI Binacional:** Diseño de dashboards en Power BI para operaciones en México y Ecuador, integrando datos de ERP Dynamics y Odoo[cite: 17, 18].
+* **Marketing Intelligence:** Centralización de métricas de **Google Analytics, Google Ads y Meta Ads** para definir estrategias basadas en el rendimiento de pauta digital.
 
-### 4. Ciencia de Datos Aplicada
-* **Logro:** Liderazgo en la apertura del área de Ciencia de Datos en la organización, desarrollando modelos predictivos dentro de Power BI para proyecciones de mercado y análisis de tendencias.
+### 🤖 Transformación Digital e Innovación
+* **Soluciones Low-Code & IA:** Personalización de procesos en **Odoo Studio** e integración de **Chatbots con IA** para la captación inteligente de leads.
+* [cite_start]**Ciencia de Datos Aplicada:** Liderazgo en el desarrollo de modelos predictivos dentro de Power BI para proyecciones de mercado y análisis de tendencias[cite: 21].
 
 ---
 
-## 🎓 Formación y Certificaciones
-* **Licenciatura en Relaciones Internacionales** | UNAM F.E.S. Aragón.
-* **Programador de Python (PCEP)** | CISCO.
-* **Técnico en Soporte de Ciberseguridad (CCST)** | CISCO.
-* **Idiomas:** Inglés (B1) y Francés (A2).
+## 🎓 Ecosistema de Formación y Certificaciones
+
+### 🛡️ Certificaciones Técnicas Destacadas
+* [cite_start]🥇 **PCEP – Certified Entry-Level Python Programmer** (CISCO)[cite: 12].
+* [cite_start]🛡️ **CCST – Cybersecurity Support Technician** (CISCO)[cite: 13].
+* [cite_start]🌐 **Especialista en Redes:** Configuración inicial, seguridad de terminales y dispositivos de red[cite: 52, 53, 54].
+
+### 📚 Especialización y Educación Continua
+* **Licenciatura en Relaciones Internacionales** | UNAM F.E.S. [cite_start]Aragón[cite: 64, 65].
+* [cite_start]**Análisis de Datos & SQL:** Gestión avanzada de bases de datos[cite: 50].
+* [cite_start]**Comercio Exterior Avanzado:** Dominio de INCOTERMS 2020, Sistema Aduanero y Mercado de Valores[cite: 58, 60, 62].
+* [cite_start]**Diplomado START (Accenture):** Gestión estratégica y emprendimiento[cite: 55].
+
+### 👩‍🏫 Liderazgo y Transferencia de Conocimiento
+* [cite_start]**Instructora Tecnolochicas:** Liderazgo de grupos y enseñanza de programación, desarrollando habilidades de comunicación técnica y control de grupo[cite: 44, 45, 48].
 
 ---
 
 ## 📫 Contacto Profesional
-* **Email:** [hatsiryvasquez56@aragon.unam.mx](mailto:hatsiryvasquez56@aragon.unam.mx)
-* **Teléfono:** [+52 55 7463-3940](tel:+525574633940)
-* **LinkedIn:** [Tu Enlace Aquí]
-
-## ⚙️ Mi Metodología: Del Dato a la Estrategia
-
-Para garantizar que cada solución tecnológica genere un impacto real en el negocio, sigo un proceso estructurado de 4 etapas:
-
-1. **Entendimiento del Negocio y Requerimientos:** Identificación de los KPIs críticos y las preguntas de negocio que necesitan respuesta.
-2. **Arquitectura y ETL:** Extracción de datos desde ERP/CRM (Dynamics, Odoo) y limpieza mediante Python para asegurar la calidad de la información.
-3. **Análisis y Modelado:** Aplicación de analítica descriptiva y predictiva para encontrar patrones, tendencias y áreas de oportunidad.
-4. **Visualización y Storytelling:** Entrega de dashboards intuitivos en Power BI que permiten a los directivos tomar decisiones basadas en evidencia.
+* [cite_start]**Email:** [hatsiryvasquez56@aragon.unam.mx](mailto:hatsiryvasquez56@aragon.unam.mx) [cite: 2]
+* **LinkedIn:** [Pega aquí tu enlace de LinkedIn]
+* [cite_start]**Idiomas:** Inglés (B1) y Francés (A2)[cite: 9, 10].
