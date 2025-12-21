@@ -47,3 +47,12 @@ Estratega de datos enfocada en diseñar ecosistemas tecnológicos que transforma
 * **Email:** [hatsiryvasquez56@aragon.unam.mx](mailto:hatsiryvasquez56@aragon.unam.mx)
 * **Teléfono:** [+52 55 7463-3940](tel:+525574633940)
 * **LinkedIn:** [Tu Enlace Aquí]
+
+## ⚙️ Mi Metodología: Del Dato a la Estrategia
+
+Para garantizar que cada solución tecnológica genere un impacto real en el negocio, sigo un proceso estructurado de 4 etapas:
+
+1. **Entendimiento del Negocio y Requerimientos:** Identificación de los KPIs críticos y las preguntas de negocio que necesitan respuesta.
+2. **Arquitectura y ETL:** Extracción de datos desde ERP/CRM (Dynamics, Odoo) y limpieza mediante Python para asegurar la calidad de la información.
+3. **Análisis y Modelado:** Aplicación de analítica descriptiva y predictiva para encontrar patrones, tendencias y áreas de oportunidad.
+4. **Visualización y Storytelling:** Entrega de dashboards intuitivos en Power BI que permiten a los directivos tomar decisiones basadas en evidencia.
