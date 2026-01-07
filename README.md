@@ -44,4 +44,4 @@ Estratega de datos con formación en **Relaciones Internacionales** y especializ
 ## 📫 Información de Contacto
 * **LinkedIn:** [Pega aquí tu enlace profesional]
 * **Email:** [hatsiryvasquez56@aragon.unam.mx](mailto:hatsiryvasquez56@aragon.unam.mx)
-* **Idiomas:** Inglés (B1) | [cite_start]Francés (A2)[cite: 9, 10].
+* **Idiomas:** Inglés (B1) | Francés (A2).
