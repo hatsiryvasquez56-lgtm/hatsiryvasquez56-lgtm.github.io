@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicadores de Venta Dominion | NEXO Analytics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:      #0f0820;
+    --sidebar: #0a0518;
+    --card:    #1a1035;
+    --card2:   #201445;
+    --accent:  #a855f7;
+    --accent2: #f97316;
+    --accent3: #fbbf24;
+    --accent4: #f43f5e;
+    --accent5: #22d3ee;
+    --accent6: #4ade80;
+    --text:    #f3e8ff;
+    --muted:   #9d7ec4;
+    --border:  #2d1b54;
+    --green:   #4ade80;
+    --red:     #f43f5e;
+    --yellow:  #fbbf24;
+    --conf-btn-on:  #f43f5e;
+    --conf-btn-off: #a855f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+  /* SIDEBAR */
+  #sidebar { width: 220px; min-width: 220px; background: var(--sidebar); display: flex; flex-direction: column; padding: 0; border-right: 1px solid var(--border); }
+  .sidebar-logo { padding: 20px 16px 14px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #1a0f2e 0%, #2d1b54 100%); }
+  .sidebar-logo .brand { font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
+  .sidebar-logo .sub { font-size: 10px; color: var(--muted); margin-top: 3px; }
+  .sidebar-logo .client { font-size: 11px; color: #c084fc; margin-top: 6px; font-weight: 600; }
+  .nav-section { padding: 12px 8px 4px; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; font-size: 13px; color: var(--muted); border-left: 3px solid transparent; transition: all .2s; }
+  .nav-item:hover { background: rgba(168,85,247,.1); color: var(--text); }
+  .nav-item.active { background: rgba(168,85,247,.18); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+  .sidebar-bottom { margin-top: auto; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 10px; color: var(--muted); line-height: 1.7; }
+
+  /* SIDEBAR VISUAL BANNER */
+  .sidebar-banner {
+    margin: 10px 10px 6px;
+    border-radius: 10px;
+    padding: 12px 12px 10px;
+    background: linear-gradient(135deg, #2d1b54 0%, #1e0052 100%);
+    border: 1px solid #3b0764;
+    text-align: center;
+  }
+  .banner-icon {
+    font-size: 32px; line-height: 1;
+    background: linear-gradient(135deg, #a855f7, #22d3ee);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; margin-bottom: 4px;
+  }
+  .banner-title { font-size: 11px; font-weight: 700; color: #d8b4fe; }
+  .banner-sub   { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* KPI ICON */
+  .kpi-icon { font-size: 20px; position: absolute; top: 12px; right: 14px; opacity: .35; }
+
+  /* PULSE DOT */
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .pulse { animation: pulse 2s infinite; }
+
+  /* HEXAGON decoration */
+  .hex-deco {
+    position: absolute; top: -10px; right: -10px;
+    width: 60px; height: 60px; opacity: .06;
+    background: var(--accent); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  /* MAIN */
+  #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* TOPBAR */
+  #topbar { background: var(--sidebar); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  #topbar h1 { font-size: 15px; font-weight: 700; flex: 1; color: var(--text); }
+  .filter-group { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .filter-group select { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+  .badge { background: var(--accent); color: #fff; font-size: 10px; padding: 2px 9px; border-radius: 10px; font-weight: 600; }
+
+  /* CONFIDENTIALITY TOGGLE */
+  .conf-btn {
+    display: flex; align-items: center; gap: 7px; cursor: pointer;
+    background: rgba(168,85,247,.15); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 12px; font-size: 12px;
+    color: var(--accent); font-weight: 600; transition: all .25s;
+    user-select: none;
+  }
+  .conf-btn:hover { background: rgba(168,85,247,.28); }
+  .conf-btn.active { background: rgba(244,63,94,.18); border-color: var(--conf-btn-on); color: var(--conf-btn-on); }
+  .conf-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); transition: background .25s; }
+  .conf-btn.active .dot { background: var(--conf-btn-on); }
+
+  /* CONTENT */
+  .content { flex: 1; overflow-y: auto; padding: 16px 20px; display: none; }
+  .content.active { display: block; }
+  .content::-webkit-scrollbar { width: 5px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* KPI CARDS */
+  .kpi-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-row-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-card {
+    background: var(--card); border-radius: 12px; padding: 15px 16px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .kpi-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:12px 0 0 12px; }
+  .kpi-card.purple::before { background: var(--accent); }
+  .kpi-card.orange::before { background: var(--accent2); }
+  .kpi-card.yellow::before { background: var(--accent3); }
+  .kpi-card.red::before    { background: var(--accent4); }
+  .kpi-card.cyan::before   { background: var(--accent5); }
+  .kpi-card.green::before  { background: var(--accent6); }
+  .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 7px; }
+  .kpi-value { font-size: 22px; font-weight: 800; line-height: 1; }
+  .kpi-card.purple .kpi-value { color: #d8b4fe; }
+  .kpi-card.orange .kpi-value { color: #fdba74; }
+  .kpi-card.yellow .kpi-value { color: #fde68a; }
+  .kpi-card.red .kpi-value    { color: #fda4af; }
+  .kpi-card.cyan .kpi-value   { color: #67e8f9; }
+  .kpi-card.green .kpi-value  { color: #86efac; }
+  .kpi-delta { font-size: 11px; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+  .kpi-delta.pos { color: var(--green); }
+  .kpi-delta.neg { color: var(--red); }
+  .kpi-delta.neu { color: var(--muted); }
+
+  /* CHART GRID */
+  .chart-row { display: grid; gap: 14px; margin-bottom: 16px; }
+  .chart-row.cols-1 { grid-template-columns: 1fr; }
+  .chart-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .chart-row.cols-3 { grid-template-columns: 2fr 1fr; }
+  .chart-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .chart-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between; }
+  .chart-subtitle { font-size: 10px; color: var(--muted); margin-bottom: 12px; }
+  canvas { max-width: 100%; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .data-table th { background: rgba(168,85,247,.12); color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .5px; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 7px 10px; border-bottom: 1px solid rgba(45,27,84,.5); }
+  .data-table tr:hover td { background: rgba(168,85,247,.06); }
+  .table-scroll { overflow-y: auto; max-height: 380px; }
+  .table-scroll::-webkit-scrollbar { width: 4px; }
+  .table-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* PROGRESS */
+  .progress-row { margin-bottom: 10px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+  .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; }
+
+  /* PILLS */
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+  .pill.pos { background: rgba(74,222,128,.15); color: var(--green); }
+  .pill.neg { background: rgba(244,63,94,.15); color: var(--red); }
+  .pill.neu { background: rgba(157,126,196,.1); color: var(--muted); }
+
+  /* MINI BAR */
+  .bar-mini { height: 4px; border-radius: 2px; background: var(--border); margin-top: 3px; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    padding: 8px 0 12px; border-bottom: 1px solid var(--border);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* CONF BADGE */
+  .conf-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(244,63,94,.15); border: 1px solid var(--conf-btn-on);
+    color: var(--conf-btn-on); font-size: 10px; padding: 2px 8px;
+    border-radius: 8px; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">◈ NEXO</div>
+    <div class="sub">Analytics Platform · 2025</div>
+    <div class="client">Dominion Applied Eng.</div>
+  </div>
+
+  <!-- Visual Banner -->
+  <div class="sidebar-banner">
+    <span class="banner-icon">⬡</span>
+    <div class="banner-title">NEXO Analytics</div>
+    <div class="banner-sub">Ventas · Distribución · POS</div>
+  </div>
+
+  <div class="nav-section">Principal</div>
+  <div class="nav-item active" onclick="showPage('resumen')"><span class="nav-icon">◉</span> Resumen Ejecutivo</div>
+  <div class="nav-item" onclick="showPage('distribuidor')"><span class="nav-icon">◈</span> Distribuidor</div>
+  <div class="nav-item" onclick="showPage('top50')"><span class="nav-icon">◆</span> Top 50</div>
+  <div class="nav-section">Análisis</div>
+  <div class="nav-item" onclick="showPage('metas')"><span class="nav-icon">◎</span> Metas vs Logro</div>
+  <div class="nav-item" onclick="showPage('pos')"><span class="nav-icon">⬡</span> POS · 2nd Tier</div>
+  <div class="nav-item" onclick="showPage('inventario')"><span class="nav-icon">⬢</span> Inventario</div>
+  <div class="nav-section">Empresa</div>
+  <div class="nav-item" onclick="showPage('region')"><span class="nav-icon">◐</span> Región</div>
+  <div class="nav-item" onclick="showPage('productos')"><span class="nav-icon">◑</span> Productos</div>
+  <div class="sidebar-bottom">
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px">
+      <span class="pulse" style="color:#4ade80;font-size:10px">●</span>
+      <span style="color:#4ade80;font-size:10px;font-weight:600">Sistema activo</span>
+    </div>
+    <div>Datos: 2018 – 2025</div>
+    <div>Distribuidores: <strong>1,168</strong></div>
+    <div style="margin-top:5px;padding:4px 8px;background:rgba(168,85,247,.12);border-radius:6px;border:1px solid #2d1b54;color:#c084fc;font-size:9px;text-align:center">
+      Tema Nocturno ◈ · v2.0
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <h1 id="page-title">Resumen Ejecutivo</h1>
+    <div class="filter-group">
+      <span>Año:</span>
+      <select id="yearFilter" onchange="redrawAll()">
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+      </select>
+    </div>
+    <div class="conf-btn" id="confBtn" onclick="toggleConf()" title="Activar modo confidencial para ocultar nombres de distribuidores">
+      <div class="dot"></div>
+      <span id="confLabel">Modo Confidencial: OFF</span>
+    </div>
+    <div class="filter-group"><span>🔄</span> <span class="badge">May 2025</span></div>
+  </div>
+
+  <!-- PAGE: RESUMEN -->
+  <div id="page-resumen" class="content active">
+    <div class="kpi-row">
+      <div class="kpi-card purple">
+        <div class="hex-deco"></div>
+        <div class="kpi-icon">◈</div>
+        <div class="kpi-label">Ventas Proveedor 2025</div>
+        <div class="kpi-value" id="k-ventas">$30.08M</div>
+        <div class="kpi-delta neg" id="k-yoy">▼ 12.6% vs 2024</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="hex-deco"></div>
+        <div class="kpi-icon">◎</div>
+        <div class="kpi-label">Meta Anual 2025</div>
+        <div class="kpi-value">$38.39M</div>
+        <div class="kpi-delta neu">Objetivo del año</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="hex-deco"></div>
+        <div class="kpi-icon">⬡</div>
+        <div class="kpi-label">Logro vs Meta</div>
+        <div class="kpi-value" id="k-logro">78.4%</div>
+        <div class="kpi-delta neg" id="k-falta">⚠ Faltan $8.31M</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="hex-deco"></div>
+        <div class="kpi-icon">◉</div>
+        <div class="kpi-label">Distribuidores Activos</div>
+        <div class="kpi-value">1,168</div>
+        <div class="kpi-delta neu">con compras 2025</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="hex-deco"></div>
+        <div class="kpi-icon">◆</div>
+        <div class="kpi-label">Crecimiento Acum.</div>
+        <div class="kpi-value">+29.8%</div>
+        <div class="kpi-delta pos">▲ vs 2018</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-3">
+      <div class="chart-card">
+        <div class="chart-title">Ventas Mensuales del Proveedor <span style="color:var(--muted);font-weight:400;font-size:11px">USD</span></div>
+        <div class="chart-subtitle">Comparativo 2023 · 2024 · 2025 vs Meta mensual</div>
+        <canvas id="c-trend" height="210"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Evolución Anual</div>
+        <div class="chart-subtitle">Ventas totales 2018 – 2025</div>
+        <canvas id="c-anual" height="210"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row cols-2">
+      <div class="chart-card">
+        <div class="chart-title">Top 10 Distribuidores · Ventas 2025</div>
+        <div class="chart-subtitle">Compras al proveedor USD</div>
+        <canvas id="c-top10" height="200"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Logro vs Meta · Top 10</div>
+        <div class="chart-subtitle">% cumplimiento de meta 2025</div>
+        <canvas id="c-logro10" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: DISTRIBUIDOR -->
+  <div id="page-distribuidor" class="content">
+    <div class="kpi-row-4">
+      <div class="kpi-card purple">
+        <div class="kpi-label">Top Distribuidor 2025</div>
+        <div class="kpi-value" id="d-top" style="font-size:14px">NIKE-1734</div>
+        <div class="kpi-delta pos">$6.72M ventas</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Mayor Crecimiento YoY</div>
+        <div class="kpi-value" id="d-grow" style="font-size:14px">POSEIDON-6439</div>
+        <div class="kpi-delta pos">+453% vs 2024</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Mayor Caída YoY</div>
+        <div class="kpi-value" id="d-drop" style="font-size:14px">MEDEA-5445</div>
+        <div class="kpi-delta neg">-74.3% vs 2024</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Nuevos 2025</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-delta neu">distribuidores sin historial 2024</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title" id="d-chart-title">Ventas por Distribuidor 2025 vs 2024 (Top 25)</div>
+        <div class="chart-subtitle">Barras agrupadas · USD</div>
+        <canvas id="c-dist-bar" height="250"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Tabla Completa de Distribuidores</div>
+        <div class="chart-subtitle" id="d-subtitle">Variación YoY 2025 vs 2024 <span id="conf-badge-dist"></span></div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr>
+              <th style="width:28px">#</th>
+              <th id="th-dist">Distribuidor</th>
+              <th>ID</th>
+              <th>Ventas 2025</th>
+              <th>Ventas 2024</th>
+              <th>YoY %</th>
+              <th style="min-width:80px">Tendencia</th>
+            </tr></thead>
+            <tbody id="tbody-dist"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: TOP 50 -->
+  <div id="page-top50" class="content">
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Top 50 Distribuidores — Ventas 2025 vs 2024</div>
+        <div class="chart-subtitle">Primeros 25 en gráfica · Todos en tabla</div>
+        <canvas id="c-top50" height="260"></canvas>
+      </div>
+    </div>
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Ranking completo</div>
+        <div class="chart-subtitle">Con variación porcentual YoY</div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr>
+              <th>#</th>
+              <th id="th-top50">Distribuidor</th>
+              <th>Ventas 2025</th>
+              <th>Ventas 2024</th>
+              <th>YoY %</th>
+              <th>Barra</th>
+            </tr></thead>
+            <tbody id="tbody-top50"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: METAS -->
+  <div id="page-metas" class="content">
+    <div class="kpi-row">
+      <div class="kpi-card yellow">
+        <div class="kpi-label">Meta Total 2025</div>
+        <div class="kpi-value">$38.39M</div>
+        <div class="kpi-delta neu">Suma distribuidores c/meta</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">Logro Global</div>
+        <div class="kpi-value">78.4%</div>
+        <div class="kpi-delta neg">⚠ Bajo meta</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Encima de Meta (≥100%)</div>
+        <div class="kpi-value" id="m-sobre">—</div>
+        <div class="kpi-delta pos">distribuidores</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Bajo Meta (&lt;100%)</div>
+        <div class="kpi-value" id="m-bajo">—</div>
+        <div class="kpi-delta neg">distribuidores</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Promedio Logro</div>
+        <div class="kpi-value" id="m-avg">—</div>
+        <div class="kpi-delta neu">media de cumplimiento</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-3">
+      <div class="chart-card">
+        <div class="chart-title">Meta vs Ventas — Top 20 Distribuidores</div>
+        <div class="chart-subtitle">Comparativo USD</div>
+        <canvas id="c-meta-bar" height="260"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">% Logro por Distribuidor</div>
+        <div class="chart-subtitle">Verde ≥100% · Rojo &lt;100%</div>
+        <div class="table-scroll" id="logro-list" style="max-height:290px;padding-top:4px;"></div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Meta Mensual vs Venta Mensual 2025</div>
+        <div class="chart-subtitle">Seguimiento de metas vs resultados reales por mes</div>
+        <canvas id="c-meta-trend" height="190"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: POS -->
+  <div id="page-pos" class="content">
+    <div class="kpi-row-4">
+      <div class="kpi-card purple">
+        <div class="kpi-label">POS Total 2025</div>
+        <div class="kpi-value">$27.2M</div>
+        <div class="kpi-delta neu">ventas al canal</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Top Distribuidor POS</div>
+        <div class="kpi-value" id="pos-top" style="font-size:14px">NIKE-1734</div>
+        <div class="kpi-delta neu">$6.82M POS 2025</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">Distribuidores con POS</div>
+        <div class="kpi-value">20</div>
+        <div class="kpi-delta neu">reportados</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Top Producto</div>
+        <div class="kpi-value" style="font-size:14px">Equipo-075</div>
+        <div class="kpi-delta neu">$1.41M POS 2025</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-2">
+      <div class="chart-card">
+        <div class="chart-title">POS — Top 20 Distribuidores 2025</div>
+        <div class="chart-subtitle">Ventas al canal (precio distribuidor) USD</div>
+        <canvas id="c-pos-dist" height="280"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top 15 Productos por Venta POS 2025</div>
+        <div class="chart-subtitle">Por categoría de producto</div>
+        <canvas id="c-pos-prod" height="280"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Ventas POS Mensuales — 2025 vs 2024</div>
+        <div class="chart-subtitle">Evolución mensual del canal de distribución</div>
+        <canvas id="c-pos-trend" height="190"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: INVENTARIO -->
+  <div id="page-inventario" class="content">
+    <div class="kpi-row-4">
+      <div class="kpi-card purple">
+        <div class="kpi-label">Inventario Total</div>
+        <div class="kpi-value">$177.1M</div>
+        <div class="kpi-delta neu">valor acumulado hist.</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Top Inventario</div>
+        <div class="kpi-value" id="inv-top" style="font-size:14px">HERMES-1364</div>
+        <div class="kpi-delta neu">$33.7M</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="kpi-label">Distribuidores con Inv.</div>
+        <div class="kpi-value">20</div>
+        <div class="kpi-delta neu">reportados</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">Período</div>
+        <div class="kpi-value" style="font-size:16px">2022–2023</div>
+        <div class="kpi-delta neu">datos disponibles</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-2">
+      <div class="chart-card">
+        <div class="chart-title">Valor de Inventario por Distribuidor</div>
+        <div class="chart-subtitle">Acumulado histórico reportado (USD)</div>
+        <canvas id="c-inv-dist" height="300"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Distribución Top 10</div>
+        <div class="chart-subtitle">Participación porcentual del inventario</div>
+        <canvas id="c-inv-pie" height="300"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row cols-1">
+      <div class="chart-card">
+        <div class="chart-title">Tendencia Mensual de Inventario</div>
+        <div class="chart-subtitle">Valor consolidado en almacenes 2022–2023</div>
+        <canvas id="c-inv-trend" height="180"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: REGIÓN -->
+  <div id="page-region" class="content">
+    <div class="kpi-row-4">
+      <div class="kpi-card purple">
+        <div class="kpi-label">Países con Distribuidores</div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-delta neu">México · Ecuador</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Distribuidores México</div>
+        <div class="kpi-value">1,042</div>
+        <div class="kpi-delta neu">89.2% del total</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">Distribuidores Ecuador</div>
+        <div class="kpi-value">126</div>
+        <div class="kpi-delta neu">10.8% del total</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Top Estado/Región</div>
+        <div class="kpi-value" style="font-size:15px">CDMX</div>
+        <div class="kpi-delta pos">mayor concentración</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-2">
+      <div class="chart-card">
+        <div class="chart-title">Ventas por País 2025</div>
+        <div class="chart-subtitle">Distribución geográfica USD</div>
+        <canvas id="c-pais" height="260"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Top 10 Estados · México</div>
+        <div class="chart-subtitle">Distribución por entidad federativa</div>
+        <canvas id="c-estados" height="260"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: PRODUCTOS -->
+  <div id="page-productos" class="content">
+    <div class="kpi-row-4">
+      <div class="kpi-card purple">
+        <div class="kpi-label">Productos Activos</div>
+        <div class="kpi-value">15+</div>
+        <div class="kpi-delta neu">categorías principales</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Top Producto POS</div>
+        <div class="kpi-value" style="font-size:14px">Equipo-075</div>
+        <div class="kpi-delta neu">$1.41M</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">Categorías</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-delta neu">Equipo · Pinza · Calibrador · Voltro · Analizador</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="kpi-label">Promedio por SKU</div>
+        <div class="kpi-value">$685K</div>
+        <div class="kpi-delta neu">venta POS 2025</div>
+      </div>
+    </div>
+
+    <div class="chart-row cols-2">
+      <div class="chart-card">
+        <div class="chart-title">Ventas POS por Producto Top 15</div>
+        <div class="chart-subtitle">Ranking de productos por monto 2025</div>
+        <canvas id="c-prod-bar" height="300"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Participación por Categoría</div>
+        <div class="chart-subtitle">Share de ventas POS por familia de producto</div>
+        <canvas id="c-prod-pie" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const D = {
+  meses: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
+  series: {
+    "2023":[3132890,1887206,2896873,2605283,2524469,2464640,2563013,2594896,3415846,3371831,3972142,0],
+    "2024":[2924889,2493408,3709805,2510883,2922211,3490055,2333201,3408906,2480469,2948529,2773676,0],
+    "2025":[1630848,2366959,2417202,1909805,2890056,3007605,2822941,2242334,2478259,3271972,2263271,0]
+  },
+  meta_serie:[3111238,3111238,3111238,3558064,3558064,3558064,3256662,3256662,3256662,2869675,2869675,2869675],
+  ventas_año:{
+    labels:[2018,2019,2020,2021,2022,2023,2024,2025],
+    valores:[23164044,24959088,20121245,25486578,30310125,34553818,34397053,30076556]
+  },
+  top50:{
+    labels:["NIKE-1734","ATENEA-3487","HERMES-1364","POSEIDON-2427","ATLAS-1652","ATLAS-3658","CICLOPE-2889","TITANES-2536","POSEIDON-4197","DEMETER-1603","ATLAS-10266","GAIA-385","GAIA-6108","ULISES-1489","EOLO-6408","TITANES-530","ARGOS-1059","ULISES-4911","GAIA-6403","GAIA-4456","MEDEA-6271","TITANES-10147","ZEFIRO-507","ULISES-781","PERSEO-1546","CIRCE-313","IRIS-10115","BOREAS-7409","SPHINX-10847","ATENEA-4726","MEDEA-5445","KRONOS-6991","CIRCE-5210","DIKE-1854","CICLOPE-1650","AURA-10293","PERSEO-1133","POSEIDON-6439","APOLO-10330","GLAUCO-6295","MEDUSA-10852","CIRCE-1670","SELENE-7042","ZEUS-10150","NEREO-6116","NOCHE-10416","ULISES-5324","CENTAURO-10199","HELIOS-5035","ARGOS-4894"],
+    v2025:[6717701,4241475,2422971,1867953,1727403,1529502,1236407,1174223,1001289,744233,706386,620372,602947,520464,491268,454382,356813,322872,318541,317045,281375,199277,198955,182677,160479,144119,108065,104822,102750,99336,89335,88194,87754,86647,79916,68961,63432,61957,56854,55869,50206,47400,42018,40145,31248,30769,28809,23487,15297,15278],
+    v2024:[5004399,3540312,2169987,1575311,2608925,1323100,1287640,1425163,1125855,587218,444462,722318,569517,488588,569817,315650,346618,360094,258291,562186,308393,285205,169411,43162,129485,168194,69641,182294,0,46663,347334,79035,68796,99499,36641,66296,29002,11199,55240,64493,0,63937,165619,72839,18119,123436,15981,121821,0,40600],
+    yoy:[34.2,19.8,11.7,18.6,-33.8,15.6,-4.0,-17.6,-11.1,26.7,58.9,-14.1,5.9,6.5,-13.8,44.0,2.9,-10.3,23.3,-43.6,-8.8,-30.1,17.4,323.2,23.9,-14.3,55.2,-42.5,null,112.9,-74.3,11.6,27.6,-12.9,118.1,4.0,118.7,453.2,2.9,-13.4,null,-25.9,-74.6,-44.9,72.5,-75.1,80.3,-80.7,null,-62.4]
+  },
+  comparativo:{
+    labels:["NIKE-1734","ATENEA-3487","ATLAS-1652","HERMES-1364","SCILA-1045","POSEIDON-2427","TITANES-2536","ATLAS-3658","CICLOPE-2889","POSEIDON-4197","GAIA-385","GAIA-4456","DEMETER-1603","EOLO-6408","GAIA-6108","ULISES-1489","ARGOS-1059","ATLAS-10266","ULISES-781","GLAUCO-5351"],
+    meta:[6155411,3894343,2869818,2386986,1918057,1858868,1681692,1455410,1416404,1260957,794550,770195,692917,672384,672030,576534,554589,524465,500000,500000],
+    ventas:[6717701,4241475,1727403,2422971,0,1867953,1174223,1529502,1236407,1001289,620372,317045,744233,491268,602947,520464,356813,706386,182677,0],
+    logro:[109.1,108.9,60.2,101.5,0,100.5,69.8,105.1,87.3,79.4,78.1,41.2,107.4,73.1,89.7,90.3,64.3,134.7,36.5,0]
+  },
+  pos_dist:{
+    labels:["NIKE-1734","ATENEA-3487","ATLAS-1652","HERMES-1364","ATLAS-3658","POSEIDON-2427","TITANES-2536","CICLOPE-2889","POSEIDON-4197","DEMETER-1603","TESEO-1137","TITANES-530","ATLAS-10266","ULISES-1489","GAIA-385","EOLO-6408","GLAUCO-5351","GAIA-4456","ULISES-4911","NOCHE-1035"],
+    valores:[6815757,3950451,2814564,2540709,1764877,1686759,1436301,1323882,927957,903674,725330,613248,546813,533397,524829,365879,345209,338034,326194,305630]
+  },
+  top_prods:{
+    labels:["Equipo-075","Pinza-376","Calibrador-754","Equipo-915","Voltro-1777","Equipo-100","Voltro-87","Pinza-323","Analizador-810","Equipo-789","Pinza-325","Pinza-381","Equipo-1587","Voltro-117","Termógrafo-480"],
+    valores:[1411888,1385811,1328648,781900,758278,757735,604376,596694,562390,548114,539212,509807,442080,426619,412766]
+  },
+  inv_dist:{
+    labels:["HERMES-1364","NIKE-1734","SCILA-1045","ATLAS-1652","POSEIDON-2427","ATLAS-3658","TITANES-2536","CICLOPE-2889","TITANES-530","GAIA-385","HEFESTO-5142","GAIA-4456","PERSEO-1546","ATENEA-4726","EOLO-6408","CICLOPE-1650","ULISES-4911","GAIA-6403","NIKE-849","SELENE-7042"],
+    valores:[33746768,30541424,19756327,15363913,10634229,9586179,8400661,8299061,5620672,5516317,4165544,4012660,3879783,3165894,2559386,1978798,1952743,1588434,1473524,1454337]
+  },
+  inv_trend:{
+    labels:["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03"],
+    valores:[8680097,8130656,7567018,7828037,11321467,15840625,16922386,14962212,13607152,10745799,12766756,15758093,14460558,9998357,6727494]
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+// CONFIDENTIALITY TOGGLE
+// ═══════════════════════════════════════════════════════
+let confidential = false;
+
+function toggleConf() {
+  confidential = !confidential;
+  const btn = document.getElementById('confBtn');
+  const lbl = document.getElementById('confLabel');
+  btn.classList.toggle('active', confidential);
+  lbl.textContent = confidential ? 'Modo Confidencial: ON' : 'Modo Confidencial: OFF';
+
+  // Update dynamic KPI cards that show distributor names
+  document.getElementById('d-top').textContent  = maskName('NIKE-1734');
+  document.getElementById('d-grow').textContent = maskName('POSEIDON-6439');
+  document.getElementById('d-drop').textContent = maskName('MEDEA-5445');
+  document.getElementById('pos-top').textContent = maskName('NIKE-1734');
+  document.getElementById('inv-top').textContent = maskName('HERMES-1364');
+
+  // Redraw all charts and tables on current page
+  redrawAll();
+}
+
+// Mask a label like "NIKE-1734" → "Dist-1734" when confidential
+function maskName(label) {
+  if (!confidential) return label;
+  const parts = label.split('-');
+  if (parts.length < 2) return label;
+  const id = parts[parts.length - 1];
+  return 'Dist-' + id;
+}
+
+function maskAll(arr) {
+  return arr.map(maskName);
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
+const fmt = v => {
+  if (v >= 1e6) return '$' + (v/1e6).toFixed(2) + 'M';
+  if (v >= 1e3) return '$' + (v/1e3).toFixed(1) + 'K';
+  return '$' + v.toFixed(0);
+};
+const fmtN = v => {
+  if (v >= 1e6) return (v/1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return (v/1e3).toFixed(0) + 'K';
+  return v.toFixed(0);
+};
+
+// Palette "Nocturno"
+const COLS = ['#a855f7','#f97316','#22d3ee','#f43f5e','#fbbf24','#4ade80','#c084fc','#fb923c','#67e8f9','#86efac'];
+const GRID = { color: 'rgba(45,27,84,0.6)', lineWidth: 1 };
+Chart.defaults.color = '#9d7ec4';
+Chart.defaults.font  = { family: 'Segoe UI', size: 11 };
+
+const charts = {};
+function dC(id){ if(charts[id]){ charts[id].destroy(); delete charts[id]; } }
+
+// ═══════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════
+const PAGE_TITLES = {
+  resumen:'Resumen Ejecutivo', distribuidor:'Distribuidor',
+  top50:'Top 50 Distribuidores', metas:'Metas vs Logro',
+  pos:'POS · 2nd Tier', inventario:'Inventario',
+  region:'Región', productos:'Productos'
+};
+
+function showPage(id){
+  document.querySelectorAll('.content').forEach(e => e.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+  const el = document.getElementById('page-'+id);
+  if(el) el.classList.add('active');
+  event.currentTarget.classList.add('active');
+  document.getElementById('page-title').textContent = PAGE_TITLES[id] || id;
+  setTimeout(() => renderPage(id), 60);
+}
+
+function redrawAll(){ renderPage(currentPage()); }
+function currentPage(){
+  const pages = ['resumen','distribuidor','top50','metas','pos','inventario','region','productos'];
+  for(const p of pages){ const el=document.getElementById('page-'+p); if(el && el.classList.contains('active')) return p; }
+  return 'resumen';
+}
+function renderPage(id){
+  if(id==='resumen')      renderResumen();
+  if(id==='distribuidor') renderDistribuidor();
+  if(id==='top50')        renderTop50();
+  if(id==='metas')        renderMetas();
+  if(id==='pos')          renderPOS();
+  if(id==='inventario')   renderInventario();
+  if(id==='region')       renderRegion();
+  if(id==='productos')    renderProductos();
+}
+
+// ═══════════════════════════════════════════════════════
+// RESUMEN
+// ═══════════════════════════════════════════════════════
+function renderResumen(){
+  dC('c-trend');
+  charts['c-trend'] = new Chart(document.getElementById('c-trend'),{
+    type:'line',
+    data:{
+      labels: D.meses,
+      datasets:[
+        {label:'2023', data:D.series['2023'], borderColor:'#6b21a8', backgroundColor:'transparent', borderWidth:1.5, borderDash:[4,4], pointRadius:2, tension:.4},
+        {label:'2024', data:D.series['2024'], borderColor:'#f97316', backgroundColor:'rgba(249,115,22,.07)', borderWidth:2, pointRadius:3, fill:true, tension:.4},
+        {label:'2025', data:D.series['2025'], borderColor:'#a855f7', backgroundColor:'rgba(168,85,247,.12)', borderWidth:2.5, pointRadius:4, fill:true, tension:.4},
+        {label:'Meta 2025', data:D.meta_serie, borderColor:'#f43f5e', backgroundColor:'transparent', borderWidth:1.5, borderDash:[6,3], pointRadius:0, tension:0}
+      ]
+    },
+    options:{responsive:true, interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID},y:{grid:GRID,ticks:{callback:fmtN}}}
+    }
+  });
+
+  dC('c-anual');
+  const yc = D.ventas_año.labels.map(y => y===2025?'#a855f7': y===2024?'#f97316':'#3b0764');
+  charts['c-anual'] = new Chart(document.getElementById('c-anual'),{
+    type:'bar',
+    data:{labels:D.ventas_año.labels, datasets:[{label:'Ventas USD',data:D.ventas_año.valores,backgroundColor:yc,borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:{display:false}},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+
+  const top10L = maskAll(D.top50.labels.slice(0,10));
+  const top10V = D.top50.v2025.slice(0,10);
+  dC('c-top10');
+  charts['c-top10'] = new Chart(document.getElementById('c-top10'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:top10L,datasets:[{label:'Ventas 2025',data:top10V,backgroundColor:COLS,borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false}}}}
+  });
+
+  const cmpL = maskAll(D.comparativo.labels.slice(0,10));
+  const cmpLg = D.comparativo.logro.slice(0,10);
+  dC('c-logro10');
+  charts['c-logro10'] = new Chart(document.getElementById('c-logro10'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:cmpL,datasets:[{label:'Logro %',data:cmpLg,
+      backgroundColor:cmpLg.map(v=>v>=100?'rgba(74,222,128,.75)':v>=75?'rgba(251,191,36,.75)':'rgba(244,63,94,.75)'),
+      borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw}%`}}},
+      scales:{x:{grid:GRID,ticks:{callback:v=>v+'%'},max:150},y:{grid:{display:false}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// DISTRIBUIDOR
+// ═══════════════════════════════════════════════════════
+function renderDistribuidor(){
+  document.getElementById('d-top').textContent  = maskName('NIKE-1734');
+  document.getElementById('d-grow').textContent = maskName('POSEIDON-6439');
+  document.getElementById('d-drop').textContent = maskName('MEDEA-5445');
+  document.getElementById('th-dist').textContent = confidential ? 'ID Distribuidor' : 'Distribuidor';
+
+  const badge = document.getElementById('conf-badge-dist');
+  badge.innerHTML = confidential ? '<span class="conf-badge">🔒 Modo Confidencial Activo</span>' : '';
+
+  const n = Math.min(25, D.top50.labels.length);
+  dC('c-dist-bar');
+  charts['c-dist-bar'] = new Chart(document.getElementById('c-dist-bar'),{
+    type:'bar',
+    data:{labels: maskAll(D.top50.labels.slice(0,n)),
+      datasets:[
+        {label:'2025',data:D.top50.v2025.slice(0,n),backgroundColor:'rgba(168,85,247,.8)',borderRadius:4,borderSkipped:false},
+        {label:'2024',data:D.top50.v2024.slice(0,n),backgroundColor:'rgba(249,115,22,.5)',borderRadius:4,borderSkipped:false}
+      ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45}},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+
+  const tbody = document.getElementById('tbody-dist');
+  const maxV = D.top50.v2025[0]||1;
+  tbody.innerHTML = D.top50.labels.map((lbl,i)=>{
+    const v25=D.top50.v2025[i], v24=D.top50.v2024[i], yoy=D.top50.yoy[i];
+    const yn = yoy===null||yoy===undefined;
+    const ys = yn?'—':(Math.abs(yoy)>500?'🆕 Nuevo':(yoy>0?'+':'')+yoy.toFixed(1)+'%');
+    const yc2 = yn?'':'yoy-'+(yoy>0?'up':'down');
+    const bw = Math.min(100,(v25/maxV*100)).toFixed(0);
+    const bc = yoy===null?'#a855f7':(yoy>=0?'#4ade80':'#f43f5e');
+    const displayName = maskName(lbl);
+    const id = lbl.split('-').pop();
+    return `<tr>
+      <td style="color:var(--muted);font-size:10px">${i+1}</td>
+      <td><strong>${displayName}</strong></td>
+      <td style="color:var(--muted);font-size:10px">${id}</td>
+      <td>${fmt(v25)}</td>
+      <td>${fmt(v24)}</td>
+      <td><span style="color:${yoy===null?'var(--muted)':yoy>0?'var(--green)':'var(--red)'};font-weight:600">${ys}</span></td>
+      <td><div class="bar-mini"><div class="bar-fill" style="width:${bw}%;background:${bc}"></div></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOP 50
+// ═══════════════════════════════════════════════════════
+function renderTop50(){
+  document.getElementById('th-top50').textContent = confidential ? 'ID Distribuidor' : 'Distribuidor';
+  const n = 25;
+  dC('c-top50');
+  charts['c-top50'] = new Chart(document.getElementById('c-top50'),{
+    type:'bar',
+    data:{labels:maskAll(D.top50.labels.slice(0,n)),
+      datasets:[
+        {label:'2025',data:D.top50.v2025.slice(0,n),backgroundColor:'rgba(168,85,247,.8)',borderRadius:4,borderSkipped:false},
+        {label:'2024',data:D.top50.v2024.slice(0,n),backgroundColor:'rgba(249,115,22,.5)',borderRadius:4,borderSkipped:false}
+      ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45}},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+
+  const tbody = document.getElementById('tbody-top50');
+  const maxV = D.top50.v2025[0]||1;
+  tbody.innerHTML = D.top50.labels.map((lbl,i)=>{
+    const v25=D.top50.v2025[i], v24=D.top50.v2024[i], yoy=D.top50.yoy[i];
+    const yn = yoy===null||yoy===undefined;
+    const ys = yn?'—':(Math.abs(yoy)>500?'🆕 Nuevo':(yoy>0?'+':'')+yoy.toFixed(1)+'%');
+    const bw = Math.min(100,(v25/maxV*100)).toFixed(0);
+    const bc = yoy===null?'#a855f7':(yoy>=0?'#4ade80':'#f43f5e');
+    return `<tr>
+      <td style="color:var(--muted);font-size:10px;width:28px">${i+1}</td>
+      <td><strong>${maskName(lbl)}</strong></td>
+      <td>${fmt(v25)}</td>
+      <td>${fmt(v24)}</td>
+      <td style="color:${yn?'var(--muted)':yoy>0?'var(--green)':'var(--red)'};font-weight:600">${ys}</td>
+      <td><div class="bar-mini"><div class="bar-fill" style="width:${bw}%;background:${bc}"></div></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// METAS
+// ═══════════════════════════════════════════════════════
+function renderMetas(){
+  const c = D.comparativo;
+  const logros = c.logro.filter(v=>v>0);
+  document.getElementById('m-sobre').textContent = logros.filter(v=>v>=100).length;
+  document.getElementById('m-bajo').textContent  = logros.filter(v=>v<100).length;
+  document.getElementById('m-avg').textContent   = (logros.reduce((a,b)=>a+b,0)/(logros.length||1)).toFixed(1)+'%';
+
+  dC('c-meta-bar');
+  charts['c-meta-bar'] = new Chart(document.getElementById('c-meta-bar'),{
+    type:'bar',
+    data:{labels:maskAll(c.labels),
+      datasets:[
+        {label:'Meta',data:c.meta,backgroundColor:'rgba(251,191,36,.5)',borderRadius:4,borderSkipped:false},
+        {label:'Ventas',data:c.ventas,
+          backgroundColor:c.ventas.map((v,i)=>v>=c.meta[i]?'rgba(74,222,128,.8)':'rgba(244,63,94,.7)'),
+          borderRadius:4,borderSkipped:false}
+      ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${fmt(ctx.raw)}`}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45}},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+
+  const ll = document.getElementById('logro-list');
+  ll.innerHTML = c.labels.map((lbl,i)=>{
+    const lg=c.logro[i];
+    const col=lg>=100?'#4ade80':lg>=75?'#fbbf24':'#f43f5e';
+    const pct=Math.min(lg,150);
+    return `<div class="progress-row">
+      <div class="progress-label">
+        <span>${maskName(lbl)}</span>
+        <span style="color:${col};font-weight:700">${lg.toFixed(1)}%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct/150*100}%;background:${col}"></div></div>
+    </div>`;
+  }).join('');
+
+  dC('c-meta-trend');
+  charts['c-meta-trend'] = new Chart(document.getElementById('c-meta-trend'),{
+    type:'line',
+    data:{labels:D.meses,datasets:[
+      {label:'Meta Mensual',data:D.meta_serie,borderColor:'#f43f5e',borderDash:[6,3],pointRadius:0,borderWidth:2,tension:0,backgroundColor:'transparent'},
+      {label:'Ventas 2025',data:D.series['2025'],borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.1)',borderWidth:2.5,pointRadius:4,fill:true,tension:.4}
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// POS
+// ═══════════════════════════════════════════════════════
+function renderPOS(){
+  document.getElementById('pos-top').textContent = maskName('NIKE-1734');
+  dC('c-pos-dist');
+  charts['c-pos-dist'] = new Chart(document.getElementById('c-pos-dist'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:maskAll(D.pos_dist.labels),
+      datasets:[{label:'POS 2025',data:D.pos_dist.valores,
+        backgroundColor:D.pos_dist.labels.map((_,i)=>COLS[i%COLS.length]),borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false}}}}
+  });
+
+  dC('c-pos-prod');
+  charts['c-pos-prod'] = new Chart(document.getElementById('c-pos-prod'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:D.top_prods.labels,
+      datasets:[{label:'Ventas POS',data:D.top_prods.valores,
+        backgroundColor:'rgba(34,211,238,.75)',borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false},ticks:{font:{size:10}}}}}
+  });
+
+  dC('c-pos-trend');
+  charts['c-pos-trend'] = new Chart(document.getElementById('c-pos-trend'),{
+    type:'bar',
+    data:{labels:D.meses,datasets:[
+      {label:'2024',data:D.series['2024'],backgroundColor:'rgba(249,115,22,.5)',borderRadius:4,borderSkipped:false},
+      {label:'2025',data:D.series['2025'],backgroundColor:'rgba(168,85,247,.8)',borderRadius:4,borderSkipped:false}
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{boxWidth:12}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmt(c.raw)}`}}},
+      scales:{x:{grid:{display:false}},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// INVENTARIO
+// ═══════════════════════════════════════════════════════
+function renderInventario(){
+  document.getElementById('inv-top').textContent = maskName('HERMES-1364');
+  const iv = D.inv_dist;
+  dC('c-inv-dist');
+  charts['c-inv-dist'] = new Chart(document.getElementById('c-inv-dist'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:maskAll(iv.labels),
+      datasets:[{label:'Valor Inventario',data:iv.valores,
+        backgroundColor:iv.labels.map((_,i)=>COLS[i%COLS.length]),borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false}}}}
+  });
+
+  dC('c-inv-pie');
+  charts['c-inv-pie'] = new Chart(document.getElementById('c-inv-pie'),{
+    type:'doughnut',
+    data:{labels:maskAll(iv.labels.slice(0,10)),
+      datasets:[{data:iv.valores.slice(0,10),backgroundColor:COLS,
+        borderColor:COLS.map(c=>c+'44'),borderWidth:2,hoverOffset:8}]},
+    options:{responsive:true,cutout:'55%',
+      plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}},
+        tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.raw)}`}}}}
+  });
+
+  const it = D.inv_trend;
+  dC('c-inv-trend');
+  charts['c-inv-trend'] = new Chart(document.getElementById('c-inv-trend'),{
+    type:'line',
+    data:{labels:it.labels,datasets:[{label:'Inventario Total',data:it.valores,
+      borderColor:'#a855f7',backgroundColor:'rgba(168,85,247,.15)',borderWidth:2.5,pointRadius:4,fill:true,tension:.4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID},y:{grid:GRID,ticks:{callback:fmtN}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// REGIÓN
+// ═══════════════════════════════════════════════════════
+function renderRegion(){
+  dC('c-pais');
+  charts['c-pais'] = new Chart(document.getElementById('c-pais'),{
+    type:'doughnut',
+    data:{
+      labels:['México','Ecuador'],
+      datasets:[{data:[25823798,4252758],
+        backgroundColor:['#a855f7','#22d3ee'],
+        borderColor:['#a855f744','#22d3ee44'],borderWidth:2,hoverOffset:8}]
+    },
+    options:{responsive:true,cutout:'50%',
+      plugins:{legend:{position:'bottom',labels:{boxWidth:12}},
+        tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.raw)} (${(c.raw/30076556*100).toFixed(1)}%)`}}}}
+  });
+
+  dC('c-estados');
+  const estados = ['CDMX','Jalisco','Nuevo León','Estado Méx.','Querétaro','Guanajuato','Puebla','Baja Cal.','Sonora','Yucatán'];
+  const vals = [7200000,4100000,3600000,2800000,2100000,1900000,1500000,1200000,980000,760000];
+  charts['c-estados'] = new Chart(document.getElementById('c-estados'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:estados,datasets:[{label:'Ventas 2025',data:vals,
+      backgroundColor:estados.map((_,i)=>COLS[i%COLS.length]),borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// PRODUCTOS
+// ═══════════════════════════════════════════════════════
+function renderProductos(){
+  dC('c-prod-bar');
+  charts['c-prod-bar'] = new Chart(document.getElementById('c-prod-bar'),{
+    type:'bar', indexAxis:'y',
+    data:{labels:D.top_prods.labels,
+      datasets:[{label:'Ventas POS 2025',data:D.top_prods.valores,
+        backgroundColor:D.top_prods.labels.map((_,i)=>COLS[i%COLS.length]),borderRadius:4}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{x:{grid:GRID,ticks:{callback:fmtN}},y:{grid:{display:false}}}}
+  });
+
+  // Group by category
+  const cats = {Equipo:0,Pinza:0,Calibrador:0,Voltro:0,Analizador:0,Termógrafo:0};
+  D.top_prods.labels.forEach((l,i)=>{
+    const cat = l.split('-')[0];
+    if(cats[cat]!==undefined) cats[cat]+=D.top_prods.valores[i];
+    else cats['Otro'] = (cats['Otro']||0) + D.top_prods.valores[i];
+  });
+  dC('c-prod-pie');
+  charts['c-prod-pie'] = new Chart(document.getElementById('c-prod-pie'),{
+    type:'doughnut',
+    data:{labels:Object.keys(cats),
+      datasets:[{data:Object.values(cats),
+        backgroundColor:COLS,borderColor:COLS.map(c=>c+'44'),borderWidth:2,hoverOffset:8}]},
+    options:{responsive:true,cutout:'50%',
+      plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}},
+        tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.raw)}`}}}}
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+setTimeout(() => renderResumen(), 120);
+</script>
+</body>
+</html>

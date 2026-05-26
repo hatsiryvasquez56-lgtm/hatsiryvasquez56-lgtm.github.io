@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hatsiry Vasquez — AI Engineer · Data & Business Intelligence</title>
+  <meta name="description" content="Hatsiry Vasquez — AI Engineer and Data & Business Intelligence Strategist specializing in Azure AI Foundry, Vertex AI, OpenAI SDK, Power BI, and Cloud AI automation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:    #04060f;
+      --bg-card:    #0b0f1e;
+      --bg-glass:   rgba(13, 18, 40, 0.75);
+      --border:     rgba(0, 212, 255, 0.12);
+      --border-mid: rgba(0, 212, 255, 0.25);
+      --cyan:       #00d4ff;
+      --cyan-dim:   #00a8cc;
+      --purple:     #7c3aed;
+      --purple-dim: #5b21b6;
+      --pink:       #ec4899;
+      --green:      #10b981;
+      --text-1:     #f0f4ff;
+      --text-2:     #94a3b8;
+      --text-3:     #64748b;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+      --radius-sm:  8px;
+      --radius-md:  14px;
+      --radius-lg:  22px;
+      --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.12);
+      --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-deep);
+      color: var(--text-1);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* =====================================================
+       NOISE TEXTURE OVERLAY
+    ===================================================== */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* =====================================================
+       SCROLLBAR
+    ===================================================== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 3px; }
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5%;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(4, 6, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--text-2); }
+
+    .nav-links {
+      display: flex; gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan) !important;
+      padding: 0.4rem 1.1rem;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--cyan) !important;
+      color: var(--bg-deep) !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text-2); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 5% 60px;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      animation: drift 12s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+      top: -200px; left: -100px;
+      animation-duration: 14s;
+    }
+
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      bottom: -150px; right: -100px;
+      animation-duration: 10s; animation-delay: -3s;
+    }
+
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+      top: 40%; left: 55%;
+      animation-duration: 17s; animation-delay: -6s;
+      opacity: 0.12;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.05); }
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 760px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid var(--border-mid);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      background: rgba(0, 212, 255, 0.06);
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.6s ease both;
+    }
+
+    .badge-dot {
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, var(--cyan) 50%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      animation: fadeInDown 0.7s 0.1s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--font-mono);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--cyan);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.7s 0.2s ease both;
+    }
+
+    .hero-description {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-2);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      animation: fadeInDown 0.7s 0.3s ease both;
+    }
+
+    .hero-ctas {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.7s 0.4s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.8rem 1.8rem;
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .hero-socials {
+      display: flex; gap: 1.2rem; justify-content: center;
+      animation: fadeInDown 0.7s 0.5s ease both;
+    }
+
+    .social-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      background: var(--bg-glass);
+    }
+
+    .social-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(0, 212, 255, 0.08);
+    }
+
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      justify-content: center;
+      margin-top: 4rem;
+      padding: 1.5rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.8s 0.6s ease both;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* =====================================================
+       SECTION COMMONS
+    ===================================================== */
+    section { padding: 100px 5%; position: relative; z-index: 1; }
+
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--cyan);
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 100px;
+      padding: 4px 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .section-header { margin-bottom: 3.5rem; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+      margin: 0 5%;
+    }
+
+    /* =====================================================
+       ABOUT
+    ===================================================== */
+    #about { background: transparent; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-text p {
+      color: var(--text-2);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text p strong {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+
+    .highlight-box {
+      border-left: 3px solid var(--cyan);
+      padding: 1rem 1.5rem;
+      background: rgba(0, 212, 255, 0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-box p {
+      color: var(--cyan) !important;
+      font-family: var(--font-mono);
+      font-size: 0.9rem !important;
+      margin: 0 !important;
+    }
+
+    .about-cards {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+
+    .about-card {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .about-card:hover {
+      border-color: var(--border-mid);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .card-body h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-1);
+    }
+
+    .card-body p {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       SKILLS
+    ===================================================== */
+    #skills {
+      background: linear-gradient(180deg, transparent 0%, rgba(11,15,30,0.6) 100%);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .skill-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .skill-category:hover {
+      border-color: var(--border-mid);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
+    }
+
+    .skill-cat-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 1.4rem;
+    }
+
+    .skill-cat-icon {
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm);
+      font-size: 1.2rem;
+    }
+
+    .skill-cat-icon.cyan  { background: rgba(0, 212, 255, 0.12); }
+    .skill-cat-icon.purple{ background: rgba(124, 58, 237, 0.15); }
+    .skill-cat-icon.green { background: rgba(16, 185, 129, 0.12); }
+    .skill-cat-icon.pink  { background: rgba(236, 72, 153, 0.12); }
+
+    .skill-cat-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: 0.01em;
+    }
+
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      font-weight: 500;
+      border: 1px solid;
+      white-space: nowrap;
+      cursor: default;
+      transition: opacity 0.2s;
+    }
+
+    .tag:hover { opacity: 0.75; }
+
+    .tag.cyan   { color: var(--cyan);   border-color: rgba(0,212,255,0.3);   background: rgba(0,212,255,0.07); }
+    .tag.purple { color: #a78bfa;       border-color: rgba(167,139,250,0.3); background: rgba(124,58,237,0.07); }
+    .tag.green  { color: var(--green);  border-color: rgba(16,185,129,0.3);  background: rgba(16,185,129,0.07); }
+    .tag.pink   { color: var(--pink);   border-color: rgba(236,72,153,0.3);  background: rgba(236,72,153,0.07); }
+    .tag.white  { color: var(--text-2); border-color: rgba(148,163,184,0.2); background: rgba(148,163,184,0.05); }
+
+    /* =====================================================
+       PORTFOLIO / DEMOS
+    ===================================================== */
+    #portfolio { background: transparent; }
+
+    .portfolio-intro {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-mid);
+      box-shadow: 0 12px 60px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+      transform: translateY(-6px);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #060914;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #060914 0%, #0d1030 100%);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .video-placeholder:hover { background: linear-gradient(135deg, #08101a 0%, #111540 100%); }
+
+    .play-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(0, 212, 255, 0.12);
+      border: 2px solid rgba(0, 212, 255, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan);
+      font-size: 1.4rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .video-placeholder:hover .play-btn {
+      background: rgba(0, 212, 255, 0.22);
+      transform: scale(1.1);
+    }
+
+    .placeholder-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .video-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .card-body-content {
+      padding: 1.6rem;
+      display: flex; flex-direction: column;
+      flex: 1;
+    }
+
+    .project-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+      color: var(--text-1);
+    }
+
+    .project-description {
+      font-size: 0.87rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-stack {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: auto;
+    }
+
+    .stack-tag {
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      border: 1px solid rgba(0,212,255,0.2);
+      color: var(--text-3);
+      background: rgba(0,212,255,0.04);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .project-card:hover .stack-tag {
+      border-color: rgba(0,212,255,0.35);
+      color: var(--cyan-dim);
+    }
+
+    /* =====================================================
+       BI LIVE DASHBOARDS
+    ===================================================== */
+    .bi-dash-header {
+      max-width: 1100px;
+      margin: 4rem auto 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .bi-dash-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid rgba(0,212,255,0.25);
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(0,212,255,0.06);
+      white-space: nowrap;
+    }
+    .bi-dash-line { flex: 1; height: 1px; background: var(--border); }
+    .bi-dash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 2rem;
+    }
+    .bi-dash-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .bi-dash-card:hover {
+      border-color: var(--border-mid);
+      box-shadow: 0 12px 60px rgba(0,0,0,0.6), var(--shadow-glow);
+      transform: translateY(-5px);
+    }
+    .bi-dash-card:hover .dash-preview iframe {
+      pointer-events: auto;
+    }
+    .dash-preview {
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      position: relative;
+      background: #050a10;
+      border-bottom: 1px solid var(--border);
+      cursor: default;
+    }
+    .dash-preview iframe {
+      width: 1200px;
+      height: 700px;
+      transform: scale(0.295);
+      transform-origin: top left;
+      pointer-events: none;
+      border: none;
+      position: absolute;
+      top: 0; left: 0;
+    }
+    .dash-preview-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end;
+      padding: 10px 12px;
+      background: linear-gradient(to top, rgba(4,6,15,0.7) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .dash-live-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: #4ade80;
+      background: rgba(74,222,128,0.12);
+      border: 1px solid rgba(74,222,128,0.3);
+      padding: 2px 8px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .bi-dash-body { padding: 1.2rem 1.4rem; flex: 1; display: flex; flex-direction: column; }
+    .bi-dash-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .bi-dash-title { font-size: 0.95rem; font-weight: 700; color: var(--text-1); margin-bottom: 0.5rem; line-height: 1.35; }
+    .bi-dash-desc { font-size: 0.8rem; color: var(--text-2); line-height: 1.6; flex: 1; margin-bottom: 1rem; }
+    .bi-dash-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .bi-dash-stack { display: flex; flex-wrap: wrap; gap: 4px; }
+    .bi-dash-stack span {
+      font-size: 0.62rem;
+      background: rgba(124,58,237,0.12);
+      color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+    }
+    .dash-open-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan);
+      text-decoration: none;
+      border: 1px solid rgba(0,212,255,0.3);
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(0,212,255,0.06);
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+    /* Stretched link — makes the entire card clickable */
+    .dash-open-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      /* expands the hit area to cover the whole .bi-dash-card */
+      top: -9999px; left: -9999px; right: -9999px; bottom: -9999px;
+    }
+    .dash-open-btn:hover { background: rgba(0,212,255,0.14); border-color: rgba(0,212,255,0.5); }
+    .bi-dash-card:hover .dash-open-btn { background: rgba(0,212,255,0.14); border-color: rgba(0,212,255,0.5); }
+
+    /* =====================================================
+       CERTIFICATIONS STRIP
+    ===================================================== */
+    #certs {
+      padding: 60px 5%;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .certs-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .certs-label {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      min-width: 180px;
+    }
+
+    .cert-list {
+      display: flex; flex-wrap: wrap; gap: 1rem; flex: 1;
+    }
+
+    .cert-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-glass);
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s;
+    }
+
+    .cert-item:hover { border-color: var(--border-mid); }
+
+    .cert-icon { font-size: 1.3rem; }
+
+    .cert-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .cert-org {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    .community-strip {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      align-items: center;
+    }
+
+    .community-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.3);
+      background: rgba(124,58,237,0.07);
+      border-radius: 100px;
+      padding: 4px 12px;
+    }
+
+    /* =====================================================
+       CONTACT
+    ===================================================== */
+    #contact { background: transparent; }
+
+    .contact-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .contact-links {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.8rem 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--text-2);
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: var(--bg-deep);
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0,212,255,0.1);
+    }
+
+    .contact-link svg { flex-shrink: 0; }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
+    }
+
+    .form-group textarea { min-height: 130px; }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-3); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.25);
+    }
+
+    .btn-submit:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    footer {
+      padding: 2rem 5%;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    .footer-left {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-3);
+    }
+
+    .footer-left span { color: var(--cyan); }
+
+    .footer-right {
+      font-size: 0.8rem;
+      color: var(--text-3);
+    }
+
+    /* =====================================================
+       ANIMATIONS
+    ===================================================== */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; gap: 1rem; }
+      .nav-links.open {
+        display: flex;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(4,6,15,0.98);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 2rem 5%;
+        z-index: 99;
+      }
+      .nav-links a { font-size: 1rem; }
+      .hamburger { display: flex; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.2rem; }
+      .contact-wrapper { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 70px 5%; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">Hatsiry<span>.dev</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Stack</a></li>
+      <li><a href="#portfolio">Demos</a></li>
+      <li><a href="#certs">Education</a></li>
+      <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for Remote Roles · Mexico City
+      </div>
+
+      <h1 class="hero-name">Hatsiry Vasquez</h1>
+
+      <p class="hero-title">
+        AI Engineer &nbsp;·&nbsp; Cloud AI Engineer &nbsp;·&nbsp; BI &amp; Data Strategist
+      </p>
+
+      <p class="hero-description">
+        I design and ship AI systems on <strong style="color:#fff">Azure, GCP, and AWS</strong> — integrating LLMs via
+        OpenAI SDK, Assistants API and MCP into production enterprise environments. Backed by 4+ years of
+        hands-on experience in BI and data architecture, I build intelligent solutions that are grounded in
+        <strong style="color:#fff">real business data and measurable outcomes</strong>.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#portfolio" class="btn-primary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          View Live Demos
+        </a>
+        <a href="#contact" class="btn-outline">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get In Touch
+        </a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://github.com/HatsiryVasquez" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/hatsiry-vasquez" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:yos.hatsi@gmail.com" class="social-link" aria-label="Email">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Download Resume" title="Download Resume">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div class="stat-item">
+          <div class="stat-value">4+</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">$400</div>
+          <div class="stat-label">Monthly Savings via AI</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">60+</div>
+          <div class="stat-label">Distributors on Power BI</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Azure</div>
+          <div class="stat-label">GCP · AWS · Multi-Cloud</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-tag">// about me</div>
+        <h2 class="section-title">AI Engineer who speaks <span>business and data</span></h2>
+        <p>
+          I build and deploy AI systems on <strong>Azure AI Foundry, Vertex AI (GCP), and AWS</strong> —
+          integrating LLMs via OpenAI SDK, Assistants API, and MCP into production environments.
+          Currently completing <strong>AI-102 (Azure), AWS AI Practitioner</strong> · <strong>Generative AI Leader (GCP)</strong> course completed
+          while shipping real-world solutions.
+        </p>
+        <p>
+          What sets me apart: 4+ years of hands-on experience in BI and data architecture means
+          I understand the data before I touch the model. I've built Power BI ecosystems, unified ERP/CRM pipelines,
+          and designed commercial analytics for multinational distributor networks — so the AI I build
+          <strong>connects directly to business outcomes</strong>.
+        </p>
+        <p>
+          International Relations background adds global trade and commercial strategy context.
+          Active member of <strong>WomenCISO</strong> and <strong>Python CDMX</strong>.
+        </p>
+        <div class="highlight-box">
+          <p>// Azure AI Engineer cert · GCP Professional · AWS — in progress</p>
+        </div>
+      </div>
+
+      <div class="about-cards reveal">
+        <div class="about-card">
+          <div class="card-icon">🤖</div>
+          <div class="card-body">
+            <h4>AI Engineering</h4>
+            <p>Production AI systems using OpenAI SDK, Assistants API and MCP — deployed in live CRM, ERP and e-commerce environments.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">☁️</div>
+          <div class="card-body">
+            <h4>Cloud AI · Azure · GCP · AWS</h4>
+            <p>Multi-cloud AI pipelines on Azure AI Foundry and Vertex AI. AI-102 &amp; Generative AI Leader (GCP) courses completed · AWS AI Practitioner in training.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">📊</div>
+          <div class="card-body">
+            <h4>Data & BI Foundation</h4>
+            <p>4+ years building Power BI architectures, ETL pipelines and unified data layers across ERP, CRM and supply chain systems.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">🌐</div>
+          <div class="card-body">
+            <h4>Business & Commercial Context</h4>
+            <p>International Relations background + multinational commercial ops — the AI I build connects to real business outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <div class="section-tag">// tech stack</div>
+      <h2 class="section-title">Tools I build with</h2>
+      <p class="section-sub">Multi-cloud AI engineering stack — Azure, GCP, AWS — grounded in 4+ years of production data and BI work.</p>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon green">📊</div>
+          <div class="skill-cat-title">Business Intelligence & Data</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag green">Power BI · DAX</span>
+          <span class="tag green">Microsoft Fabric</span>
+          <span class="tag green">SQL</span>
+          <span class="tag green">Python</span>
+          <span class="tag green">MongoDB</span>
+          <span class="tag green">ETL Pipelines</span>
+          <span class="tag green">Data Modeling</span>
+          <span class="tag green">KPI Architecture</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon pink">💼</div>
+          <div class="skill-cat-title">Business & Commercial Analysis</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag pink">Supply Chain Analytics</span>
+          <span class="tag pink">Commercial Strategy</span>
+          <span class="tag pink">Sales & Funnel Analysis</span>
+          <span class="tag pink">Amazon Seller Analytics</span>
+          <span class="tag pink">Demand Forecasting</span>
+          <span class="tag pink">Pricing & Distribution</span>
+          <span class="tag pink">International Trade</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon cyan">☁️</div>
+          <div class="skill-cat-title">Cloud & AI Platforms</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag cyan">Azure AI Foundry</span>
+          <span class="tag cyan">Vertex AI (GCP)</span>
+          <span class="tag cyan">AWS</span>
+          <span class="tag cyan">Azure OpenAI</span>
+          <span class="tag cyan">Microsoft Fabric</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon purple">🧠</div>
+          <div class="skill-cat-title">AI / LLM Engineering</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag purple">OpenAI SDK</span>
+          <span class="tag purple">Assistants API</span>
+          <span class="tag purple">Model Context Protocol</span>
+          <span class="tag purple">GPT-4 / o-series</span>
+          <span class="tag purple">Prompt Engineering</span>
+          <span class="tag purple">RAG Pipelines</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal" style="grid-column: span 2;">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon pink">⚡</div>
+          <div class="skill-cat-title">Automation & Systems Integration</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag pink">n8n</span>
+          <span class="tag pink">Zapier</span>
+          <span class="tag pink">Power Automate</span>
+          <span class="tag pink">REST APIs</span>
+          <span class="tag pink">WhatsApp Business API</span>
+          <span class="tag pink">Odoo ERP/CRM</span>
+          <span class="tag pink">Microsoft Dynamics</span>
+          <span class="tag white">Google Ads · Analytics</span>
+          <span class="tag white">Meta · TikTok Ads</span>
+          <span class="tag white">Mailchimp</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PORTFOLIO / DEMOS -->
+  <section id="portfolio">
+    <div class="portfolio-intro">
+      <div class="section-header reveal">
+        <div class="section-tag">// portfolio · demos</div>
+        <h2 class="section-title">Projects that <span>ship to production</span></h2>
+        <p class="section-sub">Real AI, BI, and cloud solutions built for commercial environments — not toy demos. Each project solves a measurable business or data problem.</p>
+      </div>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <!-- PROJECT 1 -->
+      <div class="project-card reveal">
+        <div class="video-container">
+          <div class="video-placeholder" onclick="embedVideo(this, 'PROJECT_1_YOUTUBE_URL')" role="button" aria-label="Play demo video">
+            <div class="play-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="placeholder-label">Demo coming soon · Click to embed</span>
+          </div>
+        </div>
+        <div class="card-body-content">
+          <div class="project-badge">AI + CRM · Project 01</div>
+          <h3 class="project-title">AI Chatbot Integrated with Odoo CRM via WhatsApp</h3>
+          <p class="project-description">
+            Native Python implementation using <strong>OpenAI Assistants API</strong> and the
+            <strong>Model Context Protocol (MCP)</strong> to automate lead management, follow-ups and
+            data synchronization inside Odoo. The assistant handles multi-turn conversations over
+            WhatsApp, triggers CRM actions via REST endpoints, and syncs structured data in real time —
+            replacing an external consultancy and saving $400/month.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">OpenAI SDK</span>
+            <span class="stack-tag">Assistants API</span>
+            <span class="stack-tag">MCP</span>
+            <span class="stack-tag">Odoo</span>
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">WhatsApp API</span>
+            <span class="stack-tag">REST Endpoints</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project-card reveal">
+        <div class="video-container">
+          <div class="video-placeholder" onclick="embedVideo(this, 'PROJECT_2_YOUTUBE_URL')" role="button" aria-label="Play demo video">
+            <div class="play-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="placeholder-label">Demo coming soon · Click to embed</span>
+          </div>
+        </div>
+        <div class="card-body-content">
+          <div class="project-badge">Azure AI · Power BI · Project 02</div>
+          <h3 class="project-title">Commercial BI Platform with Azure AI Foundry & Power BI</h3>
+          <p class="project-description">
+            Full-stack BI and AI architecture built for a multinational electronics distributor network across
+            Mexico &amp; Ecuador. Unified sales, purchases, inventory, e-commerce and marketing funnel data into a
+            single semantic layer using <strong>Microsoft Fabric</strong> and <strong>Azure AI Foundry</strong>,
+            surfaced via Power BI dashboards with real-time KPI visibility for 60+ active distributors.
+            Replaced an external consultancy — saving $400/month.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Azure AI Foundry</span>
+            <span class="stack-tag">Microsoft Fabric</span>
+            <span class="stack-tag">Power BI</span>
+            <span class="stack-tag">DAX</span>
+            <span class="stack-tag">SQL</span>
+            <span class="stack-tag">Python ETL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project-card reveal">
+        <div class="video-container">
+          <div class="video-placeholder" onclick="embedVideo(this, 'PROJECT_3_YOUTUBE_URL')" role="button" aria-label="Play demo video">
+            <div class="play-btn">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <span class="placeholder-label">Demo coming soon · Click to embed</span>
+          </div>
+        </div>
+        <div class="card-body-content">
+          <div class="project-badge">GCP · Vertex AI · Project 03</div>
+          <h3 class="project-title">Vertex AI Pipelines & Google Cloud AI Automation</h3>
+          <p class="project-description">
+            AI pipelines and data workflows built on <strong>Google Cloud's Vertex AI</strong> suite, including
+            model deployment, batch prediction jobs, and integration with BigQuery for large-scale data processing.
+            Focused on building reproducible, scalable ML pipelines aligned with enterprise cloud governance.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Vertex AI</span>
+            <span class="stack-tag">GCP</span>
+            <span class="stack-tag">BigQuery</span>
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Kubeflow Pipelines</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BI LIVE DASHBOARDS SUBSECTION -->
+    <div class="bi-dash-header reveal">
+      <span class="bi-dash-label">// live bi dashboards</span>
+      <div class="bi-dash-line"></div>
+    </div>
+
+    <div class="bi-dash-grid">
+
+      <!-- DASHBOARD 1: Indicadores de Ventas — Power BI Live -->
+      <div class="bi-dash-card reveal">
+        <div class="dash-preview">
+          <iframe src="https://app.powerbi.com/view?r=eyJrIjoiNmFmYTBjOTktMGFmNy00NDcyLTllZmMtYjY0MWQ0YmZhYjBmIiwidCI6ImY5NGJmNGQ5LTgwOTctNDc5NC1hZGY2LWE1NDY2Y2EyODU2MyIsImMiOjR9" title="Indicadores de Ventas" scrolling="no" loading="lazy" allowfullscreen="true"></iframe>
+          <div class="dash-preview-overlay">
+            <span class="dash-live-badge">&#9679; Power BI Live</span>
+          </div>
+        </div>
+        <div class="bi-dash-body">
+          <div class="bi-dash-tag">Power BI Service · Live · Project 05</div>
+          <div class="bi-dash-title">Indicadores de Ventas — Live Power BI Report</div>
+          <p class="bi-dash-desc">
+            End-to-end sales performance report published to Power BI Service.
+            Tracks revenue, volume and conversion KPIs with real-time data refresh —
+            accessible directly from the cloud with no local setup required.
+          </p>
+          <div class="bi-dash-footer">
+            <div class="bi-dash-stack">
+              <span>Power BI</span><span>DAX</span><span>Power BI Service</span><span>Live Embed</span>
+            </div>
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiNmFmYTBjOTktMGFmNy00NDcyLTllZmMtYjY0MWQ0YmZhYjBmIiwidCI6ImY5NGJmNGQ5LTgwOTctNDc5NC1hZGY2LWE1NDY2Y2EyODU2MyIsImMiOjR9" target="_blank" class="dash-open-btn">Open &#8599;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD 2: Confidential Client -->
+      <div class="bi-dash-card reveal">
+        <div class="dash-preview">
+          <iframe src="Indicadores_Venta_Dominion.html" title="Sales Indicators Dashboard" scrolling="no" loading="lazy"></iframe>
+          <div class="dash-preview-overlay">
+            <span class="dash-live-badge">&#9679; Interactive</span>
+          </div>
+        </div>
+        <div class="bi-dash-body">
+          <div class="bi-dash-tag">BI · Sales KPIs · Project 06</div>
+          <div class="bi-dash-title">Sales Indicators Dashboard — Confidential Client</div>
+          <p class="bi-dash-desc">
+            Client BI dashboard consolidating sales KPIs,
+            channel performance and revenue trends with real-time filters.
+            Built for executive reporting across commercial teams.
+          </p>
+          <div class="bi-dash-footer">
+            <div class="bi-dash-stack">
+              <span>Chart.js</span><span>HTML/CSS</span><span>Vanilla JS</span><span>Filters</span>
+            </div>
+            <a href="Indicadores_Venta_Dominion.html" target="_blank" class="dash-open-btn">Open &#8599;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD 3: Ecuador -->
+      <div class="bi-dash-card reveal">
+        <div class="dash-preview">
+          <iframe src="Dashboard_Ecuador_Distribuidores.html" title="Dashboard Ecuador" scrolling="no" loading="lazy"></iframe>
+          <div class="dash-preview-overlay">
+            <span class="dash-live-badge">&#9679; Interactive</span>
+          </div>
+        </div>
+        <div class="bi-dash-body">
+          <div class="bi-dash-tag">BI · International · Project 07</div>
+          <div class="bi-dash-title">Distributor Analytics Dashboard — Ecuador</div>
+          <p class="bi-dash-desc">
+            Regional BI dashboard for the Ecuador distributor network with country-level
+            KPIs, sales volume trends, and market penetration metrics.
+            Part of a multinational analytics rollout.
+          </p>
+          <div class="bi-dash-footer">
+            <div class="bi-dash-stack">
+              <span>Chart.js</span><span>HTML/CSS</span><span>Vanilla JS</span><span>Multi-region</span>
+            </div>
+            <a href="Dashboard_Ecuador_Distribuidores.html" target="_blank" class="dash-open-btn">Open &#8599;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /BI LIVE DASHBOARDS -->
+
+  </section>
+
+  <!-- EDUCATION + CERTIFICATIONS + COMMUNITY -->
+  <section id="certs">
+    <div class="certs-inner" style="flex-direction: column; align-items: flex-start; gap: 2.5rem; max-width: 1100px; margin: 0 auto;">
+
+      <!-- Education -->
+      <div style="width:100%;">
+        <div class="certs-label" style="margin-bottom: 1.2rem;">Education</div>
+        <div class="cert-list" style="flex-direction: column; gap: 0.8rem;">
+
+          <div class="cert-item" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 1rem 1.4rem;">
+            <div style="display:flex; align-items:center; gap:10px; width:100%; justify-content: space-between;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span class="cert-icon">🎓</span>
+                <div>
+                  <div class="cert-name">B.S. Software Engineering &amp; Networks <span style="font-size:0.72rem; color: var(--cyan); font-weight:600; margin-left:8px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); padding: 2px 8px; border-radius: 100px;">In Progress</span></div>
+                  <div class="cert-org">UNITEC · Universidad Tecnológica de México</div>
+                </div>
+              </div>
+              <div class="cert-org" style="white-space: nowrap;">2025 – ~2027</div>
+            </div>
+          </div>
+
+          <div class="cert-item" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 1rem 1.4rem;">
+            <div style="display:flex; align-items:center; gap:10px; width:100%; justify-content: space-between;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span class="cert-icon">🎓</span>
+                <div>
+                  <div class="cert-name">B.A. International Relations</div>
+                  <div class="cert-org">UNAM · Universidad Nacional Autónoma de México, FES Aragón</div>
+                </div>
+              </div>
+              <div class="cert-org" style="white-space: nowrap;">2020 – 2024</div>
+            </div>
+          </div>
+
+          <div class="cert-item" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 1rem 1.4rem;">
+            <div style="display:flex; align-items:center; gap:10px; width:100%; justify-content: space-between;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span class="cert-icon">✈️</span>
+                <div>
+                  <div class="cert-name">T.S.U. Aeronautical Maintenance – Avionics</div>
+                  <div class="cert-org">Universidad Tecnológica de Nezahualcóyotl</div>
+                </div>
+              </div>
+              <div class="cert-org" style="white-space: nowrap;">2018 – 2020</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Cloud / AI Certifications + Community -->
+      <div style="display:flex; flex-wrap:wrap; gap:2rem; width:100%; align-items:flex-start;">
+        <div style="flex:1; min-width:280px;">
+          <div class="certs-label" style="margin-bottom: 1.2rem;">Cloud &amp; AI Certifications</div>
+          <div class="cert-list">
+            <div class="cert-item">
+              <span class="cert-icon">☁️</span>
+              <div>
+                <div class="cert-name">AI-102: Azure AI Engineer Associate <span style="font-size:0.68rem;color:#4ade80;margin-left:6px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);padding:2px 7px;border-radius:100px;">Course Completed</span></div>
+                <div class="cert-org">Microsoft · Azure</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">☁️</span>
+              <div>
+                <div class="cert-name">DP-600: Fabric Analytics Engineer Associate <span style="font-size:0.68rem;color:#4ade80;margin-left:6px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);padding:2px 7px;border-radius:100px;">Course Completed</span></div>
+                <div class="cert-org">Microsoft · Fabric</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">🌐</span>
+              <div>
+                <div class="cert-name">Generative AI Leader <span style="font-size:0.68rem;color:#4ade80;margin-left:6px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);padding:2px 7px;border-radius:100px;">Course Completed</span></div>
+                <div class="cert-org">Google Cloud · GCP</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">🟠</span>
+              <div>
+                <div class="cert-name">AWS AI Practitioner <span style="font-size:0.68rem;color:var(--cyan);margin-left:6px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);padding:2px 7px;border-radius:100px;">In Training</span></div>
+                <div class="cert-org">Amazon Web Services</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">🐍</span>
+              <div>
+                <div class="cert-name">PCEP – Python Entry-Level Programmer</div>
+                <div class="cert-org">Python Institute</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">🔐</span>
+              <div>
+                <div class="cert-name">CCST – Cybersecurity Support Technician</div>
+                <div class="cert-org">Cisco</div>
+              </div>
+            </div>
+            <div class="cert-item">
+              <span class="cert-icon">🔗</span>
+              <div>
+                <div class="cert-name">Networking with Python</div>
+                <div class="cert-org">Cisco Networking Academy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1; min-width:220px;">
+          <div class="certs-label" style="margin-bottom: 1.2rem;">Communities</div>
+          <div class="community-strip" style="margin-top: 0.3rem;">
+            <span class="community-badge">WomenCISO</span>
+            <span class="community-badge">Python CDMX</span>
+            <span class="community-badge">Tecnolochicas Instructor</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Cloud Badges -->
+      <div style="width:100%;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.2rem; flex-wrap:wrap;">
+          <div class="certs-label">Google Cloud Badges</div>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102" target="_blank" rel="noopener"
+             style="font-size:0.72rem; color:var(--cyan); text-decoration:none; border:1px solid rgba(0,212,255,0.25); padding:3px 10px; border-radius:100px; transition:all 0.2s;"
+             onmouseover="this.style.background='rgba(0,212,255,0.08)'" onmouseout="this.style.background='transparent'">
+            View full profile &#8599;
+          </a>
+          <span style="font-size:0.72rem; color:#a3a3a3;">Diamond League · 4,632 pts</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/24099959" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/7xFCpXl6c41wp0LLllrB7TUvpcYBIcfIbPMjsKESjGQ%3D" alt="Introduction to AI Agents" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Introduction to AI Agents</span>
+            <span style="font-size:0.62rem;color:#737373;">May 2026</span>
+          </a>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/23952405" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/6NReGq4hSLm8QJHw6Xz1w6UjnCjOcqZX0pyDcRmEQX8%3D" alt="Gen AI Agents" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Gen AI Agents: Transform Your Org</span>
+            <span style="font-size:0.62rem;color:#737373;">May 2026</span>
+          </a>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/23951759" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/9O2IRFwesEmalG0DGGZ2cjVVE7GzSClBz5xBIMzH%2BZ4%3D" alt="Gen AI Apps" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Gen AI Apps: Transform Your Work</span>
+            <span style="font-size:0.62rem;color:#737373;">May 2026</span>
+          </a>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/23925842" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/p7HnLAA3bLUMFdoJ1p4iKj3fISp9aEOqCo2m68MYic4%3D" alt="Gen AI Navigate" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Gen AI: Navigate the Landscape</span>
+            <span style="font-size:0.62rem;color:#737373;">May 2026</span>
+          </a>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/23911489" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/QCFXLKG7%2FPZPSCEdaIkdbwJaJKWQFUYITkYLPApMkcg%3D" alt="Gen AI Foundational" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Gen AI: Unlock Foundational Concepts</span>
+            <span style="font-size:0.62rem;color:#737373;">May 2026</span>
+          </a>
+          <a href="https://www.skills.google/public_profiles/b4c91314-a823-4948-a4bd-be954c247102/badges/23803057" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://cdn.qwiklabs.com/ZLTKgDPBgi5GOfU5%2Fr3IPnPCd4W%2Bv5F8AeuvASVCK0Q%3D" alt="Gen AI Beyond Chatbot" style="width:72px;height:72px;object-fit:contain;">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Gen AI: Beyond the Chatbot</span>
+            <span style="font-size:0.62rem;color:#737373;">Apr 2026</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Additional Certifications & Constancias -->
+      <div style="width:100%;">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:1.2rem; flex-wrap:wrap;">
+          <div class="certs-label">Additional Certifications</div>
+          <a href="https://github.com/HatsiryVasquez/Constancias" target="_blank" rel="noopener"
+             style="font-size:0.72rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.25);padding:3px 10px;border-radius:100px;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px;"
+             onmouseover="this.style.background='rgba(0,212,255,0.08)'" onmouseout="this.style.background='transparent'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Ver todas mis constancias &#8599;
+          </a>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
+
+          <!-- Credly Verified Badges -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.2rem 1.4rem;grid-column:1/-1;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.2rem;flex-wrap:wrap;">
+              <div style="font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Verified Badges · Credly</div>
+              <a href="https://www.credly.com/users/hatsiry-vasquez" target="_blank" rel="noopener"
+                 style="font-size:0.72rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.25);padding:2px 10px;border-radius:100px;transition:all 0.2s;"
+                 onmouseover="this.style.background='rgba(0,212,255,0.08)'" onmouseout="this.style.background='transparent'">
+                View all on Credly &#8599;
+              </a>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:1rem;">
+          <a href="https://www.credly.com/badges/9d57a8d4-4c99-4728-9693-d968359d50fb" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <div data-iframe-width="80" data-iframe-height="80" data-share-badge-id="9d57a8d4-4c99-4728-9693-d968359d50fb" data-share-badge-host="https://www.credly.com" style="width:80px;height:80px;"></div>
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">CCST Cybersecurity</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Mar 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/aad94e27-dad6-49a7-b19f-dd86c5284866" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/5d5ac32b-d239-42b8-9665-8a921dc3ab47/linkedin_thumb_image.png" alt="Cyber Threat Management" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Cyber Threat Management</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Feb 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/e01f63dc-84f6-4591-9952-f6fa6fb1741b" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/51526f76-711b-4caf-b04d-27f89512b112/linkedin_thumb_NetworkDefense_v1_091721.png" alt="Network Defense" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Network Defense</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Feb 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/51624853-4596-46e9-bb62-d0ddc4c9a4b8" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/0ca5f542-fb5e-4a22-9b7a-c1a1ce4c3db7/linkedin_thumb_EndpointSecurity.png" alt="Endpoint Security" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Endpoint Security</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Feb 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/0b0e2074-dd23-4f2e-b3b5-4d3b0064b2ad" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/88316fe8-5651-4e61-a6be-5be1558f049e/linkedin_thumb_image.png" alt="Networking Devices &amp; Config" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Networking Devices &amp; Config</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Jan 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/999ef8f0-d1a0-4a3e-9a19-74a4ecd53e1a" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/5bdd6a39-3e03-4444-9510-ecff80c9ce79/linkedin_thumb_image.png" alt="Networking Basics" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Networking Basics</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Jan 2024</span>
+          </a>
+          <a href="https://www.credly.com/badges/a2d1f304-f246-43a6-a726-11a631d17856" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/linkedin_thumb_I2CS__1_.png" alt="Introduction to Cybersecurity" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">Introduction to Cybersecurity</span>
+            <span style="font-size:0.62rem;color:#737373;">Cisco · Nov 2023</span>
+          </a>
+          <a href="https://www.credly.com/badges/8e0d0273-5959-4f9c-8c98-fa1be9313608" target="_blank" rel="noopener"
+             style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-decoration:none;transition:all 0.25s;width:130px;"
+             onmouseover="this.style.borderColor='rgba(0,212,255,0.35)';this.style.background='rgba(0,212,255,0.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.background='rgba(255,255,255,0.03)'">
+            <img src="https://images.credly.com/size/340x340/images/b790eb12-ecb3-4b94-89be-61aa40c92e7c/linkedin_thumb_image.png" alt="PCEP – Python Programmer" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
+            <span style="font-size:0.68rem;color:#d4d4d4;text-align:center;line-height:1.3;">PCEP – Python Programmer</span>
+            <span style="font-size:0.62rem;color:#737373;">Python Institute · Aug 2022</span>
+          </a>
+            </div>
+          </div>
+          <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+
+          <!-- Data & SQL -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.2rem;">
+            <div style="font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:0.05em;margin-bottom:0.7rem;text-transform:uppercase;">Data &amp; Databases</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>🗄️</span> Introducción a las Bases de Datos — SQL <span style="color:#737373;font-size:0.74rem;">UNAM</span></span>
+                <a href="constancias/SQL-Bases-de-Datos-UNAM.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Finance & Economics -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.2rem;">
+            <div style="font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:0.05em;margin-bottom:0.7rem;text-transform:uppercase;">Finance &amp; Economics</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>📊</span> Análisis Económico <span style="color:#737373;font-size:0.74rem;">UNAM · 2022</span></span>
+                <a href="constancias/Analisis-Economico.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>📈</span> Mercado de Valores <span style="color:#737373;font-size:0.74rem;">UNAM · 2022</span></span>
+                <a href="constancias/Mercado-de-Valores.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#d4d4d4;"><span>📗</span> Excel Advanced <span style="color:#737373;font-size:0.74rem;">Certified</span></div>
+            </div>
+          </div>
+
+          <!-- International Trade -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.2rem;">
+            <div style="font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:0.05em;margin-bottom:0.7rem;text-transform:uppercase;">International Trade</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>🌍</span> Incoterms 2020 <span style="color:#737373;font-size:0.74rem;">UNAM · 2021</span></span>
+                <a href="constancias/Incoterms-2020.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>🛃</span> Sistema Aduanero Internacional <span style="color:#737373;font-size:0.74rem;">UNAM · 2022</span></span>
+                <a href="constancias/Sistema-Aduanero-Internacional.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:0.82rem;color:#d4d4d4;display:flex;align-items:center;gap:6px;"><span>📦</span> Documentación de Comercio Exterior <span style="color:#737373;font-size:0.74rem;">UNAM · 2022</span></span>
+                <a href="constancias/Documentacion-Comercio-Exterior.pdf" target="_blank" style="font-size:0.68rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,0.2);padding:2px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;">Ver &#8599;</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- English -->
+          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.2rem;">
+            <div style="font-size:0.72rem;color:var(--cyan);font-weight:600;letter-spacing:0.05em;margin-bottom:0.7rem;text-transform:uppercase;">English Language</div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#d4d4d4;"><span>🇺🇸</span> QuickLearning Módulos 1, 2 &amp; 4 <span style="color:#737373;font-size:0.74rem;">Business English</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div style="text-align:center; margin-bottom: 3rem;" class="reveal">
+      <div class="section-tag">// contact</div>
+      <h2 class="section-title">Let's build something <span>intelligent</span></h2>
+      <p class="section-sub" style="margin: 0 auto;">Open to remote AI Engineer, Cloud AI Engineer, and BI/Data roles. Also available for freelance AI and data analytics projects.</p>
+    </div>
+
+    <div class="contact-wrapper reveal">
+      <div class="contact-links">
+        <a href="mailto:yos.hatsi@gmail.com" class="contact-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          yos.hatsi@gmail.com
+        </a>
+        <a href="https://linkedin.com/in/hatsiry-vasquez" target="_blank" rel="noopener" class="contact-link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          linkedin.com/in/hatsiry-vasquez
+        </a>
+        <a href="https://github.com/HatsiryVasquez" target="_blank" rel="noopener" class="contact-link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          github.com/HatsiryVasquez
+        </a>
+        <a href="tel:+525574633940" class="contact-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +52 55 7463-3940
+        </a>
+      </div>
+
+      <form onsubmit="return false;" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <la
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project or role..." rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+<!-- FOOTER -->
+  <footer style="text-align:center;padding:2rem 1rem;border-top:1px solid var(--border);color:var(--text-3);font-size:0.78rem;font-family:var(--font-mono);">
+    <span style="color:var(--cyan);">Hatsiry Vasquez</span> · AI Engineer &amp; BI Specialist · Mexico City
+    <br><span style="opacity:0.4;font-size:0.7rem;">Built with HTML, CSS &amp; Chart.js · 2025</span>
+  </footer>
+
+  <script>
+    // ── Reveal on scroll (IntersectionObserver) ───────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Also trigger visible immediately for elements already in viewport on load
+    window.addEventListener('load', () => {
+      revealEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add('visible');
+      });
+    });
+
+    // ── Navbar scroll effect ──────────────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.style.background = 'rgba(4,6,15,0.97)';
+        navbar.style.boxShadow  = '0 1px 0 rgba(0,212,255,0.08)';
+      } else {
+        navbar.style.background = 'rgba(4,6,15,0.85)';
+        navbar.style.boxShadow  = 'none';
+      }
+    });
+
+    // ── Hamburger menu (mobile) ───────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        hamburger.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+        });
+      });
+    }
+
+    // ── Active nav highlight on scroll ───────────────────────────────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+    const activateNav = () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      });
+      navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    };
+    window.addEventListener('scroll', activateNav);
+  </script>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
